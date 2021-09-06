@@ -15,6 +15,8 @@ class Mario extends SpriteAnimationGroupComponent<MarioState>
   bool collided = false;
   ObjectGroup objGroup;
   Coins coins;
+  Vector2 velocity = Vector2(2, 2);
+  Vector2 gravity = Vector2(0, -2);
   Future<void> onLoad() async {
     super.onLoad();
 
@@ -39,16 +41,27 @@ class Mario extends SpriteAnimationGroupComponent<MarioState>
     final runRightSpriteAnimation = marioSpriteSheet.createAnimation(
         row: 0, stepTime: 0.15, from: 8, to: 10);
 
-    final idleSpriteAnimation =
-        marioSpriteSheet.createAnimation(row: 0, stepTime: 0, from: 7, to: 8);
+    final idleRightSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.1, from: 7, to: 8);
+
+    final idleLeftSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.1, from: 6, to: 7);
+
+    final jumpRightSpriteAnimation = marioSpriteSheet.createAnimation(
+        row: 0, stepTime: 0.0, from: 12, to: 13);
+
+    final jumpLeftSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.0, from: 1, to: 2);
 
     animations = {
       MarioState.runningLeft: runLeftSpriteAnimation,
       MarioState.runningRight: runRightSpriteAnimation,
-      MarioState.idle: idleSpriteAnimation,
+      MarioState.idleLeft: idleLeftSpriteAnimation,
+      MarioState.idleRight: idleRightSpriteAnimation,
+      MarioState.jumpRight: jumpRightSpriteAnimation,
+      MarioState.jumpLeft: jumpLeftSpriteAnimation
     };
 
-    current = MarioState.runningRight;
     position = Vector2(gameRef.size.x / 2, gameRef.size.y - gameRef.size.y / 5);
     size = Vector2(27, 34.25);
     anchor = Anchor.center;

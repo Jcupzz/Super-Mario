@@ -1,83 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="200" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="20">
- <tileset firstgid="1" name="Mario" tilewidth="16" tileheight="16" spacing="1" tilecount="143" columns="13">
-  <image source="tiles-5.png" trans="ff00ff" width="220" height="186"/>
-  <tile id="0">
-   <properties>
-    <property name="appearanceType" value="0"/>
-    <property name="isDestroyable" value="0"/>
-    <property name="type" value="STBlock"/>
-   </properties>
-  </tile>
-  <tile id="5">
-   <properties>
-    <property name="appearanceType" value="0"/>
-    <property name="blockType" value="1"/>
-    <property name="isDestroyable" value="1"/>
-    <property name="type" value="STBlock"/>
-   </properties>
-  </tile>
-  <tile id="6">
-   <properties>
-    <property name="appearanceType" value="0"/>
-    <property name="type" value="STItemBlock"/>
-   </properties>
-  </tile>
-  <tile id="30">
-   <properties>
-    <property name="appearanceType" value="0"/>
-    <property name="blockType" value="2"/>
-    <property name="isDestroyable" value="0"/>
-    <property name="type" value="STBlock"/>
-   </properties>
-  </tile>
-  <tile id="31">
-   <properties>
-    <property name="type" value="STCoin"/>
-   </properties>
-  </tile>
-  <tile id="55">
-   <properties>
-    <property name="type" value="STLakitu"/>
-   </properties>
-  </tile>
-  <tile id="58">
-   <properties>
-    <property name="appearanceType" value="0"/>
-    <property name="blockType" value="1"/>
-    <property name="isDestroyable" value="1"/>
-    <property name="type" value="STBlock"/>
-   </properties>
-  </tile>
-  <tile id="92">
-   <properties>
-    <property name="type" value="STBlock"/>
-   </properties>
-  </tile>
-  <tile id="101">
-   <properties>
-    <property name="type" value="STFireBall"/>
-   </properties>
-  </tile>
-  <tile id="115">
-   <properties>
-    <property name="type" value="STGumba"/>
-   </properties>
-  </tile>
-  <tile id="132">
-   <properties>
-    <property name="type" value="STKoopa"/>
-   </properties>
-  </tile>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="200" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="68">
+ <tileset firstgid="1" name="tiles-5" tilewidth="16" tileheight="16" tilecount="36" columns="6">
+  <image source="tiles-5.png" width="96" height="96"/>
  </tileset>
- <layer id="1" name="bg" width="200" height="14">
+ <layer id="8" name="nbg" width="200" height="14">
   <data encoding="base64" compression="zlib">
-   eJztlcsOgjAQRRvRrY81foB+gLJXP0DXqHv1//cOCSQjgTJlWtrEuziJkT7O3E6hNMaUAICg3Imncv5DuUbK+4XML2Yt2nMPXYdPP83aL+IjqL2v/mr+e2AN377a/Xy62fKbIruxeQ6duwsh6vDpN0XtIXsyZBYx3abILlSeQ3cbgH8m1t0GAAAAfHBMwAGAFDkwYrsAkBonoiAuijVmCdSRE1uhU3tsbFLI75+8pf7VN+PGGPMNWRIrYj1Bvrnp7+sdsRc68bGxz1yTXwxf3962M9X2hNa/qDmz3y65N3tsBHtlxLxmIfDL6nH8P97XGVuLP5M4NWNdnLp8pLRdx+TnK0NX7675rt623ux6V7l429512r5t7sTV/N4P7bsBAAAAsPEFhnPBCA==
+   eJztlutqwzAMhc26sUvZpewG6Ua3bu//jFMgASFkS9Gc1A3nxwclseRjScfpPqW0B5M5EF/EdwNawPpm4DBT3qXOeSR+iN9gfLS25+DLljXWnDs+A7XrcXTkXQrvOWvGR/f8r9Zov5bWOGevo3faGusB0C/UAAAAgEU3cGodALRGl2L+eGpAO1gPFw1okHQp5o9HxqnPAM6fa+KGuJ0QM/d/HumNTrwrxb4SO+LdWNfincC5Jx4a0DFVy5xzoenwPrPQ5qH3xh3D45Hove5F84b0R27fTwVtXeROyNWw1nzJ3M/ES+U9ouu9Wqy5sO45S5Omw3rm6Zk2D9IbHo9Ys2vVrlSbUn7NH1qO3cAb+52rRX/WbeG8G+Jy4CpTwxybIcY7X1ruUozMz9ePuuV7GZvLL8/t9YfWM64l10e+xtqn5AUtj6dnfB7Gtf2zbdL9Mc6MrHNpdi2PeL4B3vylfUdPfKS8PwAAAIAIf9UAH8U=
   </data>
  </layer>
- <layer id="2" name="collision" width="200" height="14">
+ <layer id="9" name="ncollision" width="200" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt1VEKgCAQRdFpIbaA2kD7X1kFfcWoow5oeQ8M9DOg9R6JAABmsPY+ADCo7Zq99yGAgR29DwB0EJ7JoR+YTRD6AWiC0A9A8+4G/YCnEHm27NXuetG6QT/gRcu4JV9aFq27XmLdoB/wkMp4KmOxLJbks1WqG/QDrSwZ13KWymJpRmvlumH9/3lafj6195zpHXm/O+Y7U/uNpWH3LzP7/e85AQDwDcs=
+   eJztwzENAAAAAiDtX9oO3rCRAAAAAAAAAAAA8KiqHgcRKwGR
   </data>
  </layer>
  <objectgroup id="5" name="coins">
@@ -117,14 +50,9 @@
    </properties>
   </object>
  </objectgroup>
- <layer id="3" name="objects" width="200" height="14" visible="0">
+ <layer id="10" name="nplatform" width="200" height="14">
   <data encoding="base64" compression="zlib">
-   eJztlmsKxCAMhLO/ego9xUIv5Q16+aVLC0uIGq2PmM0HwRRqa8cZKoBhGMZctmv0U1dhGLIZlY/3oPcYRkue5MNnRkMutmc8nuiyZ0bNuKtWRXs+dlSAeuoazzvRpksKj6oWB5YPCeAMUJm48ZE+x4q6zMSB5WNFJOUjdHimBHA2JOZjy9/yZcUz8bnGDerWOiMf3H/bjYv0ObAXa32Jz6IlUNmQmA8ttNZW0v+DgvI4RwPKi6O9GcvG6vk4Ot9fyog9PqD/d/y+i+oxKY+nNIh5sZU/OVqlsrF6PnoTgH/W5uzxiuf2EOlvOB6nfJby4hOPlmicy8aMfLyUV+13/pNGrbXTVJrBe1wzr3SuFmq108YHEDsfWg==
-  </data>
- </layer>
- <layer id="6" name="newObjects" width="200" height="14">
-  <data encoding="base64" compression="zlib">
-   eJztw6ENAAAMAjDU/j95D+CwbdIEAAAAAACA5koAAAAAWD1U/gAf
+   eJzt1LEKACAIBcAm//+TWyOCqMzpDtyUJwi2BgAAAAD8FEORIxYF8MPrvzmdvcl5ydj1V/zYzIzVvSruttsBAAAAYNYB0wQBIQ==
   </data>
  </layer>
  <objectgroup id="7" name="platform">
@@ -133,10 +61,56 @@
   <object id="13" x="320" y="128" width="16" height="16"/>
   <object id="14" x="336" y="128" width="16" height="16"/>
   <object id="15" x="352" y="128" width="16" height="16"/>
-  <object id="16" x="448" y="176" width="16" height="16"/>
-  <object id="17" x="448" y="160" width="16" height="16"/>
-  <object id="18" x="464" y="160" width="16" height="16"/>
-  <object id="19" x="464" y="176" width="16" height="16"/>
+  <object id="20" x="544" y="128" width="16" height="16"/>
+  <object id="21" x="560" y="128" width="16" height="16"/>
+  <object id="22" x="576" y="128" width="16" height="16"/>
+  <object id="27" x="592" y="128" width="16" height="16"/>
+  <object id="23" x="784" y="96" width="16" height="16"/>
+  <object id="28" x="800" y="96" width="16" height="16"/>
+  <object id="29" x="816" y="96" width="16" height="16"/>
+  <object id="30" x="992" y="128" width="16" height="16"/>
+  <object id="34" x="1136" y="128" width="16" height="16"/>
+  <object id="35" x="1152" y="128" width="16" height="16"/>
+  <object id="36" x="1168" y="128" width="16" height="16"/>
+  <object id="37" x="1184" y="128" width="16" height="16"/>
+  <object id="38" x="1312" y="128" width="16" height="16"/>
+  <object id="39" x="1328" y="128" width="16" height="16"/>
+  <object id="40" x="1712" y="128" width="16" height="16"/>
+  <object id="41" x="1728" y="128" width="16" height="16"/>
+  <object id="42" x="2016" y="128" width="16" height="16"/>
+  <object id="43" x="2032" y="128" width="16" height="16"/>
+  <object id="44" x="2048" y="128" width="16" height="16"/>
+  <object id="45" x="2064" y="128" width="16" height="16"/>
+  <object id="46" x="2080" y="128" width="16" height="16"/>
+  <object id="47" x="2096" y="128" width="16" height="16"/>
+  <object id="48" x="2112" y="128" width="16" height="16"/>
+  <object id="49" x="2144" y="96" width="16" height="16"/>
+  <object id="50" x="2160" y="96" width="16" height="16"/>
+  <object id="51" x="2176" y="96" width="16" height="16"/>
+  <object id="52" x="2192" y="96" width="16" height="16"/>
+  <object id="53" x="2208" y="96" width="16" height="16"/>
+  <object id="54" x="2304" y="128" width="16" height="16"/>
+  <object id="55" x="2320" y="128" width="16" height="16"/>
+  <object id="56" x="2336" y="128" width="16" height="16"/>
+  <object id="57" x="2352" y="128" width="16" height="16"/>
+  <object id="58" x="2544" y="128" width="16" height="16"/>
+  <object id="59" x="2560" y="128" width="16" height="16"/>
+  <object id="60" x="2576" y="128" width="16" height="16"/>
+  <object id="61" x="2592" y="128" width="16" height="16"/>
+  <object id="62" x="2608" y="128" width="16" height="16"/>
+  <object id="31" x="976" y="128" width="16" height="16"/>
+  <object id="32" x="960" y="128" width="16" height="16"/>
+  <object id="33" x="944" y="128" width="16" height="16"/>
+  <object id="24" x="768" y="128" width="16" height="16"/>
+  <object id="25" x="752" y="128" width="16" height="16"/>
+  <object id="26" x="736" y="128" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="11" name="pipes">
+  <object id="63" x="464" y="160.47" width="32" height="32"/>
+  <object id="64" x="672" y="144" width="32" height="48"/>
+  <object id="65" x="864" y="160" width="32" height="32"/>
+  <object id="66" x="1056" y="160" width="32" height="32"/>
+  <object id="67" x="1648" y="160" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="events">
   <object id="1" name="playerSpawnPoint" type="playerSpawnPoint" x="88" y="148"/>

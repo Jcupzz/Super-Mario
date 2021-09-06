@@ -1,3 +1,5 @@
+import 'dart:async' as asyncw;
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -12,7 +14,8 @@ import 'package:tiled/tiled.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 enum MarioState {
-  idle,
+  idleLeft,
+  idleRight,
   runningLeft,
   runningRight,
   jumpLeft,
@@ -20,11 +23,24 @@ enum MarioState {
 }
 
 class SuperMario extends BaseGame with HasCollidables {
+  asyncw.Timer timer;
   TiledComponent tiledMap;
   Coins coins;
   Mario mario;
   double ax = 0, ay = 0;
   ObjectGroup objGroup;
+  MarioState currentStateOfMario = MarioState.idleRight;
+
+//Jump
+
+  double time = 0;
+  double height = 0;
+
+  double initialHeight = 0;
+
+  bool onceExecuted = false;
+
+  bool cancelX = false;
 
   Future<void> onLoad() async {
     super.onLoad();
@@ -75,6 +91,8 @@ class SuperMario extends BaseGame with HasCollidables {
 
     mario = Mario();
 
+    mario.current = currentStateOfMario;
+
     add(mario);
 
 //camera
@@ -89,27 +107,73 @@ class SuperMario extends BaseGame with HasCollidables {
 
     accelerometerEvents.listen((AccelerometerEvent event) {
       ay = event.y;
+      ax = event.x;
       // print(ay.toString());
+    });
+  }
+
+  void jumpRight() {
+    time = 0;
+    initialHeight = size.y - size.y / 5;
+    asyncw.Timer.periodic(Duration(milliseconds: 60), (Sec) {
+      time += 0.5;
+      height = -4.9 * time * time + 40 * time;
+      mario.x = mario.x + time;
+      if (initialHeight - height > size.y - size.y / 5) {
+        mario.y = size.y - size.y / 5;
+        onceExecuted = false;
+        Sec.cancel();
+        print("Execution completed");
+        cancelX = false;
+      } else {
+        mario.y = initialHeight - height;
+      }
     });
   }
 
   void update(double dt) {
     super.update(dt);
+    if (currentStateOfMario == MarioState.idleRight) {
+      if (ax < -1) {
+        print("Idle Right");
+        mario.current = MarioState.jumpRight;
+        currentStateOfMario = MarioState.jumpRight;
+        if (!onceExecuted) {
+          jumpRight();
+          cancelX = true;
+          onceExecuted = true;
+        }
+      } else if (ax > 1.5) {}
+    }
 
-    if (ay.isNegative && mario.x < -50) {
-    } else if (ay > 0 && mario.x > 200 * 16) {
-    } else {
-      if (ay.isNegative) {
-        //left
-        mario.x = mario.x.abs() + ay;
-
-        mario.current = MarioState.runningLeft;
+    if (!cancelX) {
+      if (ay.isNegative && mario.x < -50) {
+      } else if (ay > 0 && mario.x > 200 * 16) {
       } else {
-        //right
-        mario.current = MarioState.runningRight;
-        mario.x = mario.x.abs() + ay;
+        if (ay.isNegative && ay < -1.5) {
+          //left
+          mario.x = mario.x.abs() + ay;
+
+          currentStateOfMario = MarioState.runningLeft;
+          mario.current = MarioState.runningLeft;
+        } else if (ay > 1.5) {
+          //right
+          mario.current = MarioState.runningRight;
+
+          currentStateOfMario = MarioState.runningRight;
+          mario.x = mario.x.abs() + ay;
+        } else {
+          if (ay.isNegative) {
+            mario.current = MarioState.idleLeft;
+            currentStateOfMario = MarioState.idleLeft;
+          } else {
+            mario.current = MarioState.idleRight;
+            currentStateOfMario = MarioState.idleRight;
+          }
+        }
       }
     }
+
     camera.followVector2(Vector2(mario.x, size.y / 2));
   }
 }
