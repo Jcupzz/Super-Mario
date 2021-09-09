@@ -35,6 +35,8 @@ class SuperMario extends Forge2DGame {
 
   asyncw.Timer timer;
 
+  SuperMario() : super(gravity: Vector2(0, -10), zoom: 1.0);
+
   Future<void> onLoad() async {
     super.onLoad();
 
@@ -68,7 +70,7 @@ class SuperMario extends Forge2DGame {
         animation: coinSpriteAnimation,
         size: spriteSize,
       );
-      add(Coins(animationComponent, Vector2(obj.x, -(obj.y))));
+      add(Coins(animationComponent, Vector2(obj.x + 8, -(obj.y) - 8)));
     });
 
     //Mario

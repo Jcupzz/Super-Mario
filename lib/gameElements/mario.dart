@@ -17,39 +17,43 @@ import 'package:super_mario_game/gameElements/coins.dart';
 class Mario extends PositionBodyComponent {
   final Vector2 position;
 
-  bool collided = false;
-  ObjectGroup objGroup;
-  asyncw.Timer timer;
+  // bool collided = false;
+  // ObjectGroup objGroup;
+  // asyncw.Timer timer;
 
-  SuperMario superMario;
-  Vector2 velocity = Vector2(2, 2);
-  Vector2 gravity = Vector2(0, -2);
+  // SuperMario superMario;
+  // Vector2 velocity = Vector2(2, 2);
+  // Vector2 gravity = Vector2(0, -2);
 
-  double ax = 0, ay = 0;
+  // double ax = 0, ay = 0;
 
   //Jump
 
-  double time = 0;
-  double height = 0;
+  // double time = 0;
+  // double height = 0;
 
-  double initialHeight = 0;
+  // double initialHeight = 0;
 
-  bool onceExecuted = false;
+  // bool onceExecuted = false;
 
-  bool cancelX = false;
+  // bool cancelX = false;
 
-  bool cancelRight = false;
+  // bool cancelRight = false;
 
-  double speedOfMario = 1;
+  // double speedOfMario = 1;
 
-  MarioState currentStateOfMario = MarioState.idleRight;
+  // MarioState currentStateOfMario = MarioState.idleRight;
 
-  bool cancelLeft = false;
+  // bool cancelLeft = false;
 
   Mario(
     this.position,
     PositionComponent component,
   ) : super(component, component.size);
+
+  Future<void> onLoad() async {
+    super.onLoad();
+  }
 
   @override
   Body createBody() {
@@ -67,14 +71,6 @@ class Mario extends PositionBodyComponent {
       // ..linearVelocity = velocity
       ..type = BodyType.dynamic;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
-  }
-
-  Future<void> onLoad() async {
-    accelerometerEvents.listen((AccelerometerEvent event) {
-      ay = event.y;
-      ax = event.x;
-      // print(ay.toString());
-    });
   }
 
   //JUMP RIGHT FUNCTION
@@ -117,74 +113,74 @@ class Mario extends PositionBodyComponent {
 //     });
 //   }
 
-  void update(double dt) {
-    super.update(dt);
+  // void update(double dt) {
+  //   super.update(dt);
 
-    // if (collided) {
-    //   // speedOfMario = 0;
-    //   cancelRight = true;
-    //   cancelLeft = true;
-    // } else {
-    //   cancelRight = false;
-    //   cancelLeft = false;
-    //   // speedOfMario = 1;
-    // }
+  // if (collided) {
+  //   // speedOfMario = 0;
+  //   cancelRight = true;
+  //   cancelLeft = true;
+  // } else {
+  //   cancelRight = false;
+  //   cancelLeft = false;
+  //   // speedOfMario = 1;
+  // }
 
-    // //JUMP LOGIC
-    // if (ax < -1) {
-    //   if (currentStateOfMario == MarioState.idleRight) {
-    //     print("Idle Right");
-    //     // current = MarioState.jumpRight;
-    //     currentStateOfMario = MarioState.jumpRight;
-    //     if (!onceExecuted) {
-    //       // jumpRight();
-    //       cancelX = true;
-    //       onceExecuted = true;
-    //     }
-    //   } else if (currentStateOfMario == MarioState.idleLeft) {
-    //     print("Idle Left");
-    //     // current = MarioState.jumpLeft;
-    //     currentStateOfMario = MarioState.jumpLeft;
-    //     if (!onceExecuted) {
-    //       // jumpLeft();
-    //       cancelX = true;
-    //       onceExecuted = true;
-    //     }
-    //   }
-    // }
+  // //JUMP LOGIC
+  // if (ax < -1) {
+  //   if (currentStateOfMario == MarioState.idleRight) {
+  //     print("Idle Right");
+  //     // current = MarioState.jumpRight;
+  //     currentStateOfMario = MarioState.jumpRight;
+  //     if (!onceExecuted) {
+  //       // jumpRight();
+  //       cancelX = true;
+  //       onceExecuted = true;
+  //     }
+  //   } else if (currentStateOfMario == MarioState.idleLeft) {
+  //     print("Idle Left");
+  //     // current = MarioState.jumpLeft;
+  //     currentStateOfMario = MarioState.jumpLeft;
+  //     if (!onceExecuted) {
+  //       // jumpLeft();
+  //       cancelX = true;
+  //       onceExecuted = true;
+  //     }
+  //   }
+  // }
 
 //RUNNING LOGIC
 //IDLE STATE LOGIC
-    // if (!cancelX) {
-    //   if (ay.isNegative && x < -50) {
-    //   } else if (ay > 0 && x > 200 * 16) {
-    //   } else {
-    //     if (ay.isNegative && ay < -1.5) {
-    //       //left
-    //       if (!cancelLeft) {
-    //         x = x.abs() + ay * speedOfMario;
-    //         currentStateOfMario = MarioState.runningLeft;
-    //         current = MarioState.runningLeft;
-    //         // cancelLeft = true;
-    //       }
-    //     } else if (ay > 1.5) {
-    //       //right
-    //       if (!cancelRight) {
-    //         current = MarioState.runningRight;
-    //         currentStateOfMario = MarioState.runningRight;
-    //         x = x.abs() + ay * speedOfMario;
-    //         // cancelRight = true;
-    //       }
-    //     } else {
-    //       if (ay.isNegative) {
-    //         current = MarioState.idleLeft;
-    //         currentStateOfMario = MarioState.idleLeft;
-    //       } else {
-    //         current = MarioState.idleRight;
-    //         currentStateOfMario = MarioState.idleRight;
-    //       }
-    //     }
-    //   }
-    // }
-  }
+  // if (!cancelX) {
+  //   if (ay.isNegative && x < -50) {
+  //   } else if (ay > 0 && x > 200 * 16) {
+  //   } else {
+  //     if (ay.isNegative && ay < -1.5) {
+  //       //left
+  //       if (!cancelLeft) {
+  //         x = x.abs() + ay * speedOfMario;
+  //         currentStateOfMario = MarioState.runningLeft;
+  //         current = MarioState.runningLeft;
+  //         // cancelLeft = true;
+  //       }
+  //     } else if (ay > 1.5) {
+  //       //right
+  //       if (!cancelRight) {
+  //         current = MarioState.runningRight;
+  //         currentStateOfMario = MarioState.runningRight;
+  //         x = x.abs() + ay * speedOfMario;
+  //         // cancelRight = true;
+  //       }
+  //     } else {
+  //       if (ay.isNegative) {
+  //         current = MarioState.idleLeft;
+  //         currentStateOfMario = MarioState.idleLeft;
+  //       } else {
+  //         current = MarioState.idleRight;
+  //         currentStateOfMario = MarioState.idleRight;
+  //       }
+  //     }
+  //   }
+  // }
+  // }
 }
