@@ -1,45 +1,34 @@
 import 'package:flame/components.dart';
-import 'package:flame/geometry.dart';
-import 'package:super_mario_game/SuperMario.dart';
-import 'package:super_mario_game/gameElements/mario.dart';
-import 'package:tiled/tiled.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/position_body_component.dart';
 
-class Coins extends SpriteAnimationComponent with Hitbox, Collidable {
-  double score = 0;
-  Mario mario;
-  bool collide = false;
-  SuperMario superMario;
+class Coins extends PositionBodyComponent {
+  final Vector2 position;
+
+  Coins(PositionComponent component, this.position)
+      : super(component, component.size);
+  @override
+  Body createBody() {
+    // debugMode = true;
+    final shape = PolygonShape()..setAsBoxXY(8, 8);
+    final fixtureDef = FixtureDef(shape)
+      ..userData = this // To be able to determine object in collision
+      ..restitution = 0.8
+      ..density = 1.0
+      ..friction = 0.2;
+
+    final bodyDef = BodyDef()
+      ..position = position
+      ..type = BodyType.static;
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
   Future<void> onLoad() async {
     super.onLoad();
-    superMario = SuperMario();
-    mario = Mario();
-    addShape(HitboxRectangle());
     debugMode = true;
-    // final ObjectGroup objGroup =
-    //     await superMario.tiledMap.getObjectGroupFromLayer("coins");
-
-    final sprite = await Sprite.load('coins.png');
-    final spriteData = SpriteAnimationData.sequenced(
-      amount: 8,
-      textureSize: Vector2.all(20),
-      stepTime: 0.1,
-    );
-    animation = SpriteAnimation.fromFrameData(sprite.image, spriteData);
-    size = Vector2.all(15);
   }
 
   void update(double dt) {
     super.update(dt);
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
-    // TODO: implement onCollision
-    super.onCollision(intersectionPoints, other);
-    if (other is Mario) {
-      // remove();
-      // score = score + 1;
-      // print(score);
-    }
   }
 }

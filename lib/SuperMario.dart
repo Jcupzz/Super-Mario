@@ -1,19 +1,17 @@
 import 'dart:async' as asyncw;
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flame_tiled/tiled_component.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart' hide Animation;
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
+import 'package:super_mario_game/gameElements/downBricks.dart';
 import 'package:super_mario_game/gameElements/mario.dart';
 import 'package:tiled/tiled.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 
 enum MarioState {
   idleLeft,
@@ -24,59 +22,107 @@ enum MarioState {
   jumpRight,
 }
 
-class SuperMario extends BaseGame with HasCollidables {
-  asyncw.Timer timer;
+class SuperMario extends Forge2DGame {
+  Image coinImg;
+  SpriteAnimation coinSpriteAnimation;
   TiledComponent tiledMap;
+  ObjectGroup coinsGroup;
+
+  ObjectGroup downBricksGroup;
+  SpriteAnimationComponent animationComponent;
   Coins coins;
-  Mario mario;
-  ObjectGroup objGroup;
+  MarioState currentStateOfMario = MarioState.idleRight;
+
+  asyncw.Timer timer;
 
   Future<void> onLoad() async {
     super.onLoad();
 
     await Flame.device.setOrientation(DeviceOrientation.landscapeLeft);
 
+//TiledMap
+
     tiledMap = TiledComponent('Map.tmx', Size(16, 16));
-
-//Layer
-
     add(tiledMap);
 
 //Object Groups
-    objGroup = await tiledMap.getObjectGroupFromLayer("coins");
 
-    print(objGroup.name.toString());
+    //Coins
 
-    print(objGroup.objects[0].name.toString());
+    coinImg = await images.load('coins.png');
 
-    // objGroup.objects.forEach((TiledObject obj) {
-    //   final comp = SpriteAnimationComponent(
-    //     animation: SpriteAnimation.fromFrameData(
-    //       sprite.image,
-    //       SpriteAnimationData.sequenced(
-    //         amount: 8,
-    //         textureSize: Vector2.all(20),
-    //         stepTime: 0.15,
-    //       ),
-    //     ),
-    //     position: Vector2(obj.x, obj.y),
-    //     size: Vector2.all(20),
-    //   );
+    coinSpriteAnimation = SpriteAnimation.fromFrameData(
+      coinImg,
+      SpriteAnimationData.sequenced(
+        amount: 8,
+        textureSize: Vector2.all(20),
+        stepTime: 0.2,
+        loop: true,
+      ),
+    );
 
-    //   add(comp);
-    // });
-
-    objGroup.objects.forEach((TiledObject obj) {
-      coins = Coins();
-      coins.position = Vector2(obj.x, obj.y);
-      add(coins);
+    coinsGroup = await tiledMap.getObjectGroupFromLayer("coins");
+    coinsGroup.objects.forEach((TiledObject obj) {
+      final spriteSize = Vector2.all(16);
+      animationComponent = SpriteAnimationComponent(
+        animation: coinSpriteAnimation,
+        size: spriteSize,
+      );
+      add(Coins(animationComponent, Vector2(obj.x, -(obj.y))));
     });
 
-    debugMode = true;
+    //Mario
+    final marioSpriteImage = await Flame.images.load('marioSpriteSheet.png');
 
-    mario = Mario();
+    final marioSpriteSheet = SpriteSheet(
+      image: marioSpriteImage,
+      srcSize: Vector2(
+          marioSpriteImage.width / 14, marioSpriteImage.height.toDouble()),
+    );
 
-    add(mario);
+    final runLeftSpriteAnimation = marioSpriteSheet.createAnimation(
+        row: 0, stepTime: 0.15, from: 4, to: 6);
+    final runRightSpriteAnimation = marioSpriteSheet.createAnimation(
+        row: 0, stepTime: 0.15, from: 8, to: 10);
+
+    final idleRightSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.1, from: 7, to: 8);
+
+    final idleLeftSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.1, from: 6, to: 7);
+
+    final jumpRightSpriteAnimation = marioSpriteSheet.createAnimation(
+        row: 0, stepTime: 0.1, from: 12, to: 13);
+
+    final jumpLeftSpriteAnimation =
+        marioSpriteSheet.createAnimation(row: 0, stepTime: 0.1, from: 1, to: 2);
+
+    final marioAnimationGroupComponent = SpriteAnimationGroupComponent(
+      animations: {
+        MarioState.runningLeft: runLeftSpriteAnimation,
+        MarioState.runningRight: runRightSpriteAnimation,
+        MarioState.idleLeft: idleLeftSpriteAnimation,
+        MarioState.idleRight: idleRightSpriteAnimation,
+        MarioState.jumpRight: jumpRightSpriteAnimation,
+        MarioState.jumpLeft: jumpLeftSpriteAnimation
+      },
+      current: currentStateOfMario,
+      position: Vector2(size.x / 2, -size.y / 5),
+      size: Vector2(27, 34.25),
+    );
+
+    add(Mario(Vector2(size.x / 2, -size.y / 5), marioAnimationGroupComponent));
+
+    // DownBricks
+
+    downBricksGroup = await tiledMap.getObjectGroupFromLayer("downBricks");
+
+    double h = downBricksGroup.objects[0].height;
+    double w = downBricksGroup.objects[0].width;
+    double dbx = downBricksGroup.objects[0].x;
+    double dby = downBricksGroup.objects[0].y;
+
+    add(DownBricks(Vector2(dbx, -(dby) - 16)));
 
 //camera
 
@@ -91,7 +137,5 @@ class SuperMario extends BaseGame with HasCollidables {
 
   void update(double dt) {
     super.update(dt);
-
-    camera.followVector2(Vector2(mario.x, size.y / 2));
   }
 }
