@@ -15,7 +15,8 @@ import 'package:tiled/tiled.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
 
 class Mario extends PositionBodyComponent {
-  final Vector2 position;
+  Vector2 position;
+  SuperMario superMario;
 
   // bool collided = false;
   // ObjectGroup objGroup;
@@ -25,8 +26,9 @@ class Mario extends PositionBodyComponent {
   // Vector2 velocity = Vector2(2, 2);
   // Vector2 gravity = Vector2(0, -2);
 
-  // double ax = 0, ay = 0;
-
+  Vector2 velocity = Vector2(0, 0);
+  double ax = 0, ay = 0;
+  BodyDef bodyDef;
   //Jump
 
   // double time = 0;
@@ -53,6 +55,8 @@ class Mario extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
+    superMario = SuperMario();
+    debugMode = false;
   }
 
   @override
@@ -60,17 +64,21 @@ class Mario extends PositionBodyComponent {
     final shape = PolygonShape()..setAsBoxXY(13.5, 17.125);
     final fixtureDef = FixtureDef(shape)
       ..userData = this // To be able to determine object in collision
-      ..restitution = 0.8
+      ..restitution = 0
       ..density = 1.0
-      ..friction = 0.2;
+      ..friction = 1;
 
-    // final velocity = (Vector2.random() - Vector2.random()) * 200;
-    final bodyDef = BodyDef()
+    bodyDef = BodyDef()
       ..position = position
-      // ..angle = velocity.angleTo(Vector2(1, 0))
-      // ..linearVelocity = velocity
+      ..angle = velocity.angleTo(Vector2(0, 0))
+      ..fixedRotation = true
       ..type = BodyType.dynamic;
+
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  void update(double dt) {
+    super.update(dt);
   }
 
   //JUMP RIGHT FUNCTION
