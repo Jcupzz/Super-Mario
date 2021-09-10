@@ -16,7 +16,6 @@ import 'package:super_mario_game/gameElements/coins.dart';
 
 class Mario extends PositionBodyComponent {
   Vector2 position;
-  SuperMario superMario;
 
   // bool collided = false;
   // ObjectGroup objGroup;
@@ -55,8 +54,8 @@ class Mario extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
-    superMario = SuperMario();
-    debugMode = true;
+
+    debugMode = false;
   }
 
   @override
@@ -70,7 +69,7 @@ class Mario extends PositionBodyComponent {
 
     bodyDef = BodyDef()
       ..position = position
-      ..angle = velocity.angleTo(Vector2(0, 0))
+      // ..angle = velocity.angleTo(Vector2(0, 0))
       ..fixedRotation = true
       ..type = BodyType.dynamic;
 

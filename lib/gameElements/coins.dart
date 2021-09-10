@@ -31,7 +31,7 @@ class Coins extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
-    debugMode = true;
+    debugMode = false;
   }
 
   void update(double dt) {

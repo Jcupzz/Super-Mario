@@ -185,25 +185,27 @@ class SuperMario extends Forge2DGame {
     if (!cancelX) {
       if (ay.isNegative && ay < -1.5) {
         //left
-        mario.body.linearVelocity =
-            mario.body.linearVelocity - Vector2(dt * 200, 0);
+
+        mario.body.applyLinearImpulse(Vector2(-700, 0));
 
         marioAnimationGroupComponent.current = MarioState.runningLeft;
         currentStateOfMario = MarioState.runningLeft;
       } else if (ay > 1.5) {
+        mario.body.applyLinearImpulse(Vector2(700, 0));
+
         //right
-        mario.body.linearVelocity =
-            mario.body.linearVelocity + Vector2(dt * 200, 0);
+        // mario.body.applyLinearImpulse(Vector2(dt * 200, 0),
+        //     point: mario.body.getLocalCenter(), wake: true);
 
         marioAnimationGroupComponent.current = MarioState.runningRight;
         currentStateOfMario = MarioState.runningRight;
       } else {
         if (ay.isNegative) {
-          mario.body.linearVelocity = Vector2(0, -10);
+          // mario.body.linearVelocity = Vector2(0, -10);
           marioAnimationGroupComponent.current = MarioState.idleLeft;
           currentStateOfMario = MarioState.idleLeft;
         } else {
-          mario.body.linearVelocity = Vector2(0, -10);
+          // mario.body.linearVelocity = Vector2(0, -10);
           marioAnimationGroupComponent.current = MarioState.idleRight;
           currentStateOfMario = MarioState.idleRight;
         }
@@ -245,11 +247,11 @@ class SuperMario extends Forge2DGame {
 
       if (time < 90) {
         if (time < 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(-80, 200);
+          // mario.body.linearVelocity =
+          //     mario.body.linearVelocity + Vector2(-80, 200);
         } else if (time > 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(-80, -200);
+          // mario.body.linearVelocity =
+          //     mario.body.linearVelocity + Vector2(-80, -200);
         }
       } else {
         sec.cancel();
@@ -267,11 +269,11 @@ class SuperMario extends Forge2DGame {
 
       if (time < 90) {
         if (time < 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(80, 200);
+          // mario.body.linearVelocity =
+          //     mario.body.linearVelocity + Vector2(80, 200);
         } else if (time > 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(80, -200);
+          // mario.body.linearVelocity =
+          //     mario.body.linearVelocity + Vector2(80, -200);
         }
       } else {
         sec.cancel();
