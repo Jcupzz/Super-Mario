@@ -10,7 +10,6 @@ class Pipes extends BodyComponent {
   @override
   Body createBody() {
     debugMode = true;
-    print(position.x.toString());
     final shape = PolygonShape()..setAsBoxXY(width / 2, height / 2);
     final fixtureDef = FixtureDef(shape)
       ..userData = this; // To be able to determine object in collision

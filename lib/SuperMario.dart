@@ -6,13 +6,13 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
-import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flame_tiled/tiled_component.dart';
 import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
+import 'package:super_mario_game/gameElements/collisionCallbacks.dart';
 import 'package:super_mario_game/gameElements/downBricks.dart';
 import 'package:super_mario_game/gameElements/mario.dart';
 import 'package:super_mario_game/gameElements/pipes.dart';
@@ -55,6 +55,8 @@ class SuperMario extends Forge2DGame {
 
   Future<void> onLoad() async {
     super.onLoad();
+
+//Contact Callbacks
     addContactCallback(CoinsContactCallback());
 
     await Flame.device.setOrientation(DeviceOrientation.landscapeLeft);
@@ -278,17 +280,5 @@ class SuperMario extends Forge2DGame {
         print("Only executed once");
       }
     });
-  }
-}
-
-class CoinsContactCallback extends ContactCallback<Coins, Mario> {
-  @override
-  void begin(Coins coinss, Mario marios, Contact contact) {
-    print("contacted");
-  }
-
-  @override
-  void end(Coins coinss, Mario marios, Contact contact) {
-    print("contacted");
   }
 }

@@ -15,7 +15,6 @@ class Coins extends PositionBodyComponent {
       : super(component, component.size);
   @override
   Body createBody() {
-    // debugMode = true;
     final shape = PolygonShape()..setAsBoxXY(8, 8);
     final fixtureDef = FixtureDef(shape)
       ..userData = this // To be able to determine object in collision
@@ -26,12 +25,13 @@ class Coins extends PositionBodyComponent {
     final bodyDef = BodyDef()
       ..position = Vector2(position.x, position.y)
       ..type = BodyType.static;
+
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 
   Future<void> onLoad() async {
     super.onLoad();
-    debugMode = false;
+    debugMode = true;
   }
 
   void update(double dt) {

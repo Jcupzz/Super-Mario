@@ -56,7 +56,7 @@ class Mario extends PositionBodyComponent {
   Future<void> onLoad() async {
     super.onLoad();
     superMario = SuperMario();
-    debugMode = false;
+    debugMode = true;
   }
 
   @override
