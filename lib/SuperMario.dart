@@ -51,6 +51,10 @@ class SuperMario extends Forge2DGame {
   double ax = 0;
   Mario mario;
 
+  asyncw.Timer timerObjVar;
+
+  bool immediatlyCancelTimer = false;
+
   SuperMario() : super(gravity: Vector2(0, -10), zoom: 1.5);
 
   Future<void> onLoad() async {
@@ -60,6 +64,9 @@ class SuperMario extends Forge2DGame {
 
 //Contact Callbacks
     addContactCallback(CoinsContactCallback());
+    addContactCallback(MarioPlatform());
+    addContactCallback(MarioDownBricks());
+    addContactCallback(MarioPipes());
 
     await Flame.device.setOrientation(DeviceOrientation.landscapeLeft);
 
@@ -180,6 +187,10 @@ class SuperMario extends Forge2DGame {
     });
   }
 
+  void cancelTimer() {
+    timer.cancel();
+  }
+
   void update(double dt) {
     super.update(dt);
 
@@ -222,7 +233,7 @@ class SuperMario extends Forge2DGame {
         currentStateOfMario = MarioState.jumpRight;
         marioAnimationGroupComponent.current = MarioState.jumpRight;
         if (!onceExecuted) {
-          // jumpRight();
+          jumpRight();
           cancelX = true;
           onceExecuted = true;
         }
@@ -244,22 +255,22 @@ class SuperMario extends Forge2DGame {
 
   void jumpLeft() {
     double time = 0;
-    asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
-      time += 1;
-
-      if (time < 60) {
-        if (time < 30) {
-          mario.body.applyLinearImpulse(Vector2(-100, 100),
-              point: mario.body.getLocalCenter());
-        } else if (time > 30) {
-          mario.body.applyLinearImpulse(Vector2(-100, -100),
-              point: mario.body.getLocalCenter());
-        }
+    double halfTime = 0;
+    double Vy = 2000;
+    double Vx = 200;
+    double V = sqrt((Vx * Vx) + (Vy * Vy));
+    halfTime = (V * sin(pi / 4)) / 10;
+    double angle = 45 * (pi / 180);
+    print(angle.toString());
+    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
+      time = time + 2;
+      if (time < halfTime * 2) {
+        mario.body.applyLinearImpulse(
+            Vector2(-(Vx * cos(angle)), Vy * sin(angle) - (10) * time));
       } else {
         sec.cancel();
         onceExecuted = false;
         cancelX = false;
-        print("Only executed once");
       }
     });
   }
@@ -287,23 +298,24 @@ class SuperMario extends Forge2DGame {
   // }
 
   void jumpRight() {
+    double halfTime = 0;
+    double Vy = 2000;
+    double Vx = 200;
+    double V = sqrt((Vx * Vx) + (Vy * Vy));
+    halfTime = (V * sin(pi / 4)) / 10;
     double time = 0;
-    asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
-      time += 1;
-
-      if (time < 90) {
-        if (time < 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(80, 200);
-        } else if (time > 45) {
-          mario.body.linearVelocity =
-              mario.body.linearVelocity + Vector2(80, -200);
-        }
+    double angle = 45 * (pi / 180);
+    print(angle.toString());
+    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
+      timerObjVar = sec;
+      time = time + 2;
+      if (time < halfTime * 2) {
+        mario.body.applyLinearImpulse(
+            Vector2((Vx * cos(angle)), Vy * sin(angle) - (10) * time));
       } else {
         sec.cancel();
         onceExecuted = false;
         cancelX = false;
-        print("Only executed once");
       }
     });
   }

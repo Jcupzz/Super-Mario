@@ -10,9 +10,8 @@ class DownBricks extends BodyComponent {
     debugMode = true;
     final shape = PolygonShape()..setAsBoxXY(1600, 16);
     final fixtureDef = FixtureDef(shape)
-      ..userData = this; // To be able to determine object in collision
-    // ..restitution = 0.8
-    // ..friction = 0.2;
+      ..userData = this // To be able to determine object in collision
+      ..friction = 0.2;
 
     final bodyDef = BodyDef()
       ..position = position

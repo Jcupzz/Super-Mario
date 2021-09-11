@@ -70,7 +70,7 @@ class Mario extends PositionBodyComponent {
     bodyDef = BodyDef()
       ..position = position
       ..userData = this // To be able to determine object in collision
-      // ..angle = velocity.angleTo(Vector2(0, 0))
+
       ..fixedRotation = true
       ..type = BodyType.dynamic;
 
@@ -79,7 +79,6 @@ class Mario extends PositionBodyComponent {
 
   void update(double dt) {
     super.update(dt);
-    print(body.getMassData().mass.toString());
   }
 
   //JUMP RIGHT FUNCTION

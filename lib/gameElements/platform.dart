@@ -17,6 +17,8 @@ class Platform extends BodyComponent {
       ..friction = 0;
 
     final bodyDef = BodyDef()
+      ..userData = this // To be able to determine object in collision
+
       ..position = Vector2(position.x, position.y)
       ..type = BodyType.static;
 
