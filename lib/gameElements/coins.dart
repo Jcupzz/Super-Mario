@@ -17,14 +17,15 @@ class Coins extends PositionBodyComponent {
   Body createBody() {
     final shape = PolygonShape()..setAsBoxXY(8, 8);
     final fixtureDef = FixtureDef(shape)
-      ..userData = this // To be able to determine object in collision
-      ..restitution = 0.8
       ..density = 1.0
-      ..friction = 0.2;
+      ..friction = 0;
 
     final bodyDef = BodyDef()
-      ..position = Vector2(position.x, position.y)
-      ..type = BodyType.static;
+          ..position = Vector2(position.x, position.y)
+          ..type = BodyType.static
+          ..userData = this // To be able to determine object in collision
+
+        ;
 
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

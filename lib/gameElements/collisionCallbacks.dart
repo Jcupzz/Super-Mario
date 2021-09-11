@@ -7,6 +7,7 @@ class CoinsContactCallback extends ContactCallback<Coins, Mario> {
   @override
   void begin(Coins coinss, Mario marios, Contact contact) {
     print("contacted");
+    coinss.remove();
   }
 
   @override

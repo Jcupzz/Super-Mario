@@ -63,12 +63,13 @@ class Mario extends PositionBodyComponent {
     final shape = PolygonShape()..setAsBoxXY(13.5, 17.125);
     final fixtureDef = FixtureDef(shape)
       ..userData = this // To be able to determine object in collision
-      ..restitution = 0
-      ..density = 1.0
-      ..friction = 1;
+
+      ..density = 0.0
+      ..friction = 0.5;
 
     bodyDef = BodyDef()
       ..position = position
+      ..userData = this // To be able to determine object in collision
       // ..angle = velocity.angleTo(Vector2(0, 0))
       ..fixedRotation = true
       ..type = BodyType.dynamic;
@@ -78,6 +79,7 @@ class Mario extends PositionBodyComponent {
 
   void update(double dt) {
     super.update(dt);
+    print(body.getMassData().mass.toString());
   }
 
   //JUMP RIGHT FUNCTION

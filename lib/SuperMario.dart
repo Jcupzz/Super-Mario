@@ -56,6 +56,8 @@ class SuperMario extends Forge2DGame {
   Future<void> onLoad() async {
     super.onLoad();
 
+//gravity
+
 //Contact Callbacks
     addContactCallback(CoinsContactCallback());
 
@@ -186,26 +188,26 @@ class SuperMario extends Forge2DGame {
       if (ay.isNegative && ay < -1.5) {
         //left
 
-        mario.body.applyLinearImpulse(Vector2(-700, 0));
+        mario.body.applyLinearImpulse(Vector2(-1000, -500));
 
         marioAnimationGroupComponent.current = MarioState.runningLeft;
         currentStateOfMario = MarioState.runningLeft;
       } else if (ay > 1.5) {
-        mario.body.applyLinearImpulse(Vector2(700, 0));
+        // mario.body.linearVelocity =
+        //     mario.body.linearVelocity + Vector2(dt * 400, 0);
 
+        mario.body.applyLinearImpulse(Vector2(1000, -500));
         //right
-        // mario.body.applyLinearImpulse(Vector2(dt * 200, 0),
-        //     point: mario.body.getLocalCenter(), wake: true);
 
         marioAnimationGroupComponent.current = MarioState.runningRight;
         currentStateOfMario = MarioState.runningRight;
       } else {
         if (ay.isNegative) {
-          // mario.body.linearVelocity = Vector2(0, -10);
+          mario.body.linearVelocity = Vector2(0, -500);
           marioAnimationGroupComponent.current = MarioState.idleLeft;
           currentStateOfMario = MarioState.idleLeft;
         } else {
-          // mario.body.linearVelocity = Vector2(0, -10);
+          mario.body.linearVelocity = Vector2(0, -500);
           marioAnimationGroupComponent.current = MarioState.idleRight;
           currentStateOfMario = MarioState.idleRight;
         }
@@ -220,7 +222,7 @@ class SuperMario extends Forge2DGame {
         currentStateOfMario = MarioState.jumpRight;
         marioAnimationGroupComponent.current = MarioState.jumpRight;
         if (!onceExecuted) {
-          jumpRight();
+          // jumpRight();
           cancelX = true;
           onceExecuted = true;
         }
@@ -245,13 +247,13 @@ class SuperMario extends Forge2DGame {
     asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
       time += 1;
 
-      if (time < 90) {
-        if (time < 45) {
-          // mario.body.linearVelocity =
-          //     mario.body.linearVelocity + Vector2(-80, 200);
-        } else if (time > 45) {
-          // mario.body.linearVelocity =
-          //     mario.body.linearVelocity + Vector2(-80, -200);
+      if (time < 60) {
+        if (time < 30) {
+          mario.body.applyLinearImpulse(Vector2(-100, 100),
+              point: mario.body.getLocalCenter());
+        } else if (time > 30) {
+          mario.body.applyLinearImpulse(Vector2(-100, -100),
+              point: mario.body.getLocalCenter());
         }
       } else {
         sec.cancel();
@@ -262,6 +264,28 @@ class SuperMario extends Forge2DGame {
     });
   }
 
+  // void jumpLeft() {
+  //   double time = 0;
+  //   asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
+  //     time += 1;
+
+  //     if (time < 90) {
+  //       if (time < 45) {
+  //         mario.body.linearVelocity =
+  //             mario.body.linearVelocity + Vector2(-80, 200);
+  //       } else if (time > 45) {
+  //         mario.body.linearVelocity =
+  //             mario.body.linearVelocity + Vector2(-80, -200);
+  //       }
+  //     } else {
+  //       sec.cancel();
+  //       onceExecuted = false;
+  //       cancelX = false;
+  //       print("Only executed once");
+  //     }
+  //   });
+  // }
+
   void jumpRight() {
     double time = 0;
     asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
@@ -269,11 +293,11 @@ class SuperMario extends Forge2DGame {
 
       if (time < 90) {
         if (time < 45) {
-          // mario.body.linearVelocity =
-          //     mario.body.linearVelocity + Vector2(80, 200);
+          mario.body.linearVelocity =
+              mario.body.linearVelocity + Vector2(80, 200);
         } else if (time > 45) {
-          // mario.body.linearVelocity =
-          //     mario.body.linearVelocity + Vector2(80, -200);
+          mario.body.linearVelocity =
+              mario.body.linearVelocity + Vector2(80, -200);
         }
       } else {
         sec.cancel();

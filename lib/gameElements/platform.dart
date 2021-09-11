@@ -14,7 +14,7 @@ class Platform extends BodyComponent {
     final fixtureDef = FixtureDef(shape)
       ..userData = this // To be able to determine object in collision
       // ..restitution = 0.8
-      ..friction = 1;
+      ..friction = 0;
 
     final bodyDef = BodyDef()
       ..position = Vector2(position.x, position.y)
