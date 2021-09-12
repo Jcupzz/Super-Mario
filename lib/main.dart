@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:super_mario_game/MyHomePage.dart';
+import 'package:super_mario_game/SuperMario.dart';
 
+MarioState currentStateOfMario;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());

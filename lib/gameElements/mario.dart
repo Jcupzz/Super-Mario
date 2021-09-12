@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'dart:async' as asyncw;
 
@@ -10,6 +11,7 @@ import 'package:flame_forge2d/position_body_component.dart';
 import 'package:flame_tiled/tiled_component.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:super_mario_game/SuperMario.dart';
+import 'package:super_mario_game/main.dart';
 import 'package:tiled/tiled.dart';
 
 import 'package:super_mario_game/gameElements/coins.dart';
@@ -28,6 +30,11 @@ class Mario extends PositionBodyComponent {
   Vector2 velocity = Vector2(0, 0);
   double ax = 0, ay = 0;
   BodyDef bodyDef;
+
+  bool onceExecuted;
+  bool cancelX;
+
+  asyncw.Timer timer;
   //Jump
 
   // double time = 0;
@@ -54,8 +61,9 @@ class Mario extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
-
     debugMode = false;
+    onceExecuted = false;
+    cancelX = false;
   }
 
   @override
@@ -79,6 +87,52 @@ class Mario extends PositionBodyComponent {
 
   void update(double dt) {
     super.update(dt);
+    //Running Logic
+
+    camera.followComponent(this.positionComponent);
+  }
+
+  void jumpLeft() {
+    double time = 0;
+    double halfTime = 0;
+    double Vy = 2000;
+    double Vx = 200;
+    double V = sqrt((Vx * Vx) + (Vy * Vy));
+    halfTime = (V * sin(pi / 4)) / 10;
+    double angle = 45 * (pi / 180);
+    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
+      time = time + 2;
+      if (time < halfTime * 2) {
+        body.applyLinearImpulse(
+            Vector2(-(Vx * cos(angle)), Vy * sin(angle) - (10) * time));
+      } else {
+        sec.cancel();
+        onceExecuted = false;
+        cancelX = false;
+      }
+    });
+  }
+
+  void jumpRight() {
+    double halfTime = 0;
+    double Vy = 2000;
+    double Vx = 200;
+    double V = sqrt((Vx * Vx) + (Vy * Vy));
+    halfTime = (V * sin(pi / 4)) / 10;
+    double time = 0;
+    double angle = 45 * (pi / 180);
+    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
+      // timerObjVar = sec;
+      time = time + 2;
+      if (time < halfTime * 2) {
+        body.applyLinearImpulse(
+            Vector2((Vx * cos(angle)), Vy * sin(angle) - (10) * time));
+      } else {
+        sec.cancel();
+        onceExecuted = false;
+        cancelX = false;
+      }
+    });
   }
 
   //JUMP RIGHT FUNCTION

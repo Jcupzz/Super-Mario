@@ -21,9 +21,12 @@ class CoinsContactCallback extends ContactCallback<Coins, Mario> {
 }
 
 class MarioPlatform extends ContactCallback<Mario, Platform> {
-  SuperMario superMario;
   @override
-  void begin(Mario mario, Platform platform, Contact contact) {}
+  void begin(Mario mario, Platform platform, Contact contact) {
+    mario.timer.cancel();
+    mario.onceExecuted = false;
+    mario.cancelX = false;
+  }
 
   @override
   void end(Mario mario, Platform platform, Contact contact) {}

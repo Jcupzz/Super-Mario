@@ -17,6 +17,7 @@ import 'package:super_mario_game/gameElements/downBricks.dart';
 import 'package:super_mario_game/gameElements/mario.dart';
 import 'package:super_mario_game/gameElements/pipes.dart';
 import 'package:super_mario_game/gameElements/platform.dart';
+import 'package:super_mario_game/main.dart';
 import 'package:tiled/tiled.dart';
 
 enum MarioState {
@@ -37,8 +38,6 @@ class SuperMario extends Forge2DGame {
   ObjectGroup platformGroup;
 
   //JUMP
-  bool onceExecuted = false;
-  bool cancelX = false;
 
   asyncw.Timer timer;
 
@@ -46,7 +45,6 @@ class SuperMario extends Forge2DGame {
   SpriteAnimationComponent animationComponent;
   SpriteAnimationGroupComponent<MarioState> marioAnimationGroupComponent;
   Coins coins;
-  MarioState currentStateOfMario = MarioState.idleRight;
   double ay = 0;
   double ax = 0;
   Mario mario;
@@ -105,6 +103,8 @@ class SuperMario extends Forge2DGame {
           obj.width,
           obj.height));
     });
+
+    currentStateOfMario = MarioState.idleRight;
 
     //Mario
     final marioSpriteImage = await Flame.images.load('marioSpriteSheet.png');
@@ -180,22 +180,21 @@ class SuperMario extends Forge2DGame {
 
     print(viewport.effectiveSize.toString());
 
-//Accel Values
     accelerometerEvents.listen((AccelerometerEvent event) {
       ax = event.x;
       ay = event.y;
     });
-  }
 
-  void cancelTimer() {
-    timer.cancel();
+    print("AY is : " + ax.toString());
+
+//Accel Values
   }
 
   void update(double dt) {
     super.update(dt);
 
     //Running Logic
-    if (!cancelX) {
+    if (!mario.cancelX) {
       if (ay.isNegative && ay < -1.5) {
         //left
 
@@ -204,8 +203,8 @@ class SuperMario extends Forge2DGame {
         marioAnimationGroupComponent.current = MarioState.runningLeft;
         currentStateOfMario = MarioState.runningLeft;
       } else if (ay > 1.5) {
-        // mario.body.linearVelocity =
-        //     mario.body.linearVelocity + Vector2(dt * 400, 0);
+        // body.linearVelocity =
+        //     body.linearVelocity + Vector2(dt * 400, 0);
 
         mario.body.applyLinearImpulse(Vector2(1000, -500));
         //right
@@ -226,97 +225,27 @@ class SuperMario extends Forge2DGame {
     }
 
     //JUMP LOGIC
-
     if (ax < -1) {
       if (currentStateOfMario == MarioState.idleRight) {
         print("Idle Right");
         currentStateOfMario = MarioState.jumpRight;
         marioAnimationGroupComponent.current = MarioState.jumpRight;
-        if (!onceExecuted) {
-          jumpRight();
-          cancelX = true;
-          onceExecuted = true;
+        if (!mario.onceExecuted) {
+          mario.jumpRight();
+          mario.cancelX = true;
+          mario.onceExecuted = true;
         }
       } else if (currentStateOfMario == MarioState.idleLeft) {
         print("Idle Left");
 
         currentStateOfMario = MarioState.jumpLeft;
         marioAnimationGroupComponent.current = MarioState.jumpLeft;
-        if (!onceExecuted) {
-          cancelX = true;
-          onceExecuted = true;
-          jumpLeft();
+        if (!mario.onceExecuted) {
+          mario.jumpLeft();
+          mario.cancelX = true;
+          mario.onceExecuted = true;
         }
       }
     }
-
-    camera.followComponent(mario.positionComponent);
-  }
-
-  void jumpLeft() {
-    double time = 0;
-    double halfTime = 0;
-    double Vy = 2000;
-    double Vx = 200;
-    double V = sqrt((Vx * Vx) + (Vy * Vy));
-    halfTime = (V * sin(pi / 4)) / 10;
-    double angle = 45 * (pi / 180);
-    print(angle.toString());
-    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
-      time = time + 2;
-      if (time < halfTime * 2) {
-        mario.body.applyLinearImpulse(
-            Vector2(-(Vx * cos(angle)), Vy * sin(angle) - (10) * time));
-      } else {
-        sec.cancel();
-        onceExecuted = false;
-        cancelX = false;
-      }
-    });
-  }
-
-  // void jumpLeft() {
-  //   double time = 0;
-  //   asyncw.Timer.periodic(Duration(milliseconds: 30), (sec) {
-  //     time += 1;
-
-  //     if (time < 90) {
-  //       if (time < 45) {
-  //         mario.body.linearVelocity =
-  //             mario.body.linearVelocity + Vector2(-80, 200);
-  //       } else if (time > 45) {
-  //         mario.body.linearVelocity =
-  //             mario.body.linearVelocity + Vector2(-80, -200);
-  //       }
-  //     } else {
-  //       sec.cancel();
-  //       onceExecuted = false;
-  //       cancelX = false;
-  //       print("Only executed once");
-  //     }
-  //   });
-  // }
-
-  void jumpRight() {
-    double halfTime = 0;
-    double Vy = 2000;
-    double Vx = 200;
-    double V = sqrt((Vx * Vx) + (Vy * Vy));
-    halfTime = (V * sin(pi / 4)) / 10;
-    double time = 0;
-    double angle = 45 * (pi / 180);
-    print(angle.toString());
-    timer = asyncw.Timer.periodic(Duration(milliseconds: 17), (sec) {
-      timerObjVar = sec;
-      time = time + 2;
-      if (time < halfTime * 2) {
-        mario.body.applyLinearImpulse(
-            Vector2((Vx * cos(angle)), Vy * sin(angle) - (10) * time));
-      } else {
-        sec.cancel();
-        onceExecuted = false;
-        cancelX = false;
-      }
-    });
   }
 }
