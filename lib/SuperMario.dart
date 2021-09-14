@@ -11,6 +11,7 @@ import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flame_tiled/tiled_component.dart';
 import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:super_mario_game/gameElements/breakingBricks.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
 import 'package:super_mario_game/gameElements/collisionCallbacks.dart';
 import 'package:super_mario_game/gameElements/downBricks.dart';
@@ -62,6 +63,7 @@ class SuperMario extends Forge2DGame {
 
 //Contact Callbacks
     addContactCallback(CoinsContactCallback());
+    addContactCallback(MarioBreakingBricks());
     addContactCallback(MarioPlatform());
     addContactCallback(MarioDownBricks());
     addContactCallback(MarioPipes());
@@ -142,12 +144,12 @@ class SuperMario extends Forge2DGame {
         MarioState.jumpLeft: jumpLeftSpriteAnimation
       },
       current: currentStateOfMario,
-      position: Vector2(size.x / 2, -size.y + 70),
+      position: Vector2(size.x / 2, -size.y / 2),
       size: Vector2(27, 34.25),
     );
 
     mario =
-        Mario(Vector2(size.x / 2, -size.y + 70), marioAnimationGroupComponent);
+        Mario(Vector2(size.x / 2, -size.y / 2), marioAnimationGroupComponent);
     add(mario);
 
     // DownBricks
@@ -169,10 +171,29 @@ class SuperMario extends Forge2DGame {
     });
 
     //Plaform
+
+    final platformImage = await Flame.images.load('tiles-5.png');
+
+    final platformSpriteSheet = SpriteSheet(
+      image: platformImage,
+      srcSize: Vector2(platformImage.width / 6, platformImage.height / 6),
+    );
+
+    final platformSprite = platformSpriteSheet.getSprite(0, 5);
+
     platformGroup = await tiledMap.getObjectGroupFromLayer("platform");
+
     platformGroup.objects.forEach((TiledObject obj) {
-      add(Platform(Vector2(obj.x + obj.width / 2, -obj.y - obj.height / 2),
-          obj.width, obj.height));
+      add(Platform(
+          platformSprite,
+          Vector2(obj.x + obj.width / 2, -obj.y - obj.height / 2),
+          obj.width,
+          obj.height));
+
+      // add(BreakingBricks(
+      //     Vector2(obj.x + obj.width / 2, -obj.y - obj.height / 2),
+      //     obj.width,
+      //     obj.height));
     });
 
 //camera

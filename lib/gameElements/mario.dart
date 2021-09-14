@@ -61,28 +61,38 @@ class Mario extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
-    debugMode = false;
+    debugMode = true;
     onceExecuted = false;
     cancelX = false;
   }
 
   @override
   Body createBody() {
-    final shape = PolygonShape()..setAsBoxXY(13.5, 17.125);
-    final fixtureDef = FixtureDef(shape)
-      ..userData = this // To be able to determine object in collision
+    final headshape = PolygonShape()
+      ..setAsBox(13.5 / 2, 17.125 / 4, Vector2(0, 17.125 - 17.125 / 4), 0);
 
+    final fixtureDef = FixtureDef(headshape)
+      ..userData = "er" // To be able to determine object in collision
+      ..density = 0.0
+      ..friction = 0.5;
+
+    final tailshape = PolygonShape()
+      ..setAsBox(13.5, 17.125 - 17.125 / 4, Vector2(0, -17.125 / 4), 0);
+
+    final fixtureDefs = FixtureDef(tailshape)
+      ..userData = this // To be able to determine object in collision
       ..density = 0.0
       ..friction = 0.5;
 
     bodyDef = BodyDef()
       ..position = position
       ..userData = this // To be able to determine object in collision
-
       ..fixedRotation = true
       ..type = BodyType.dynamic;
 
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+    return world.createBody(bodyDef)
+      ..createFixture(fixtureDefs)
+      ..createFixture(fixtureDef);
   }
 
   void update(double dt) {
