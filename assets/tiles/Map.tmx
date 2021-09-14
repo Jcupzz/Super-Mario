@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="200" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="152">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="200" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="191">
  <tileset firstgid="1" name="tiles-5" tilewidth="16" tileheight="16" tilecount="36" columns="6">
   <image source="tiles-5.png" width="96" height="96"/>
  </tileset>
@@ -38,6 +38,196 @@
    </properties>
   </object>
   <object id="8" x="352" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="152" x="544" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="153" x="560" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="154" x="592" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="155" x="576" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="156" x="784" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="157" x="800" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="158" x="816" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="159" x="752" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="160" x="960" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="161" x="976" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="162" x="1152" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="163" x="1168" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="164" x="1184" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="165" x="1136" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="166" x="2032" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="167" x="2048" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="168" x="2064" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="169" x="2080" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="170" x="2096" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="171" x="2112" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="172" x="2016" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="173" x="1904" y="176" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="174" x="2176" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="175" x="2192" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="176" x="2208" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="177" x="2144" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="178" x="2160" y="80" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="179" x="2320" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="180" x="2336" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="181" x="2352" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="182" x="2304" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="183" x="2560" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="184" x="2576" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="185" x="2592" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="186" x="2608" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="187" x="2544" y="112" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="188" x="2688" y="176" width="16" height="16">
+   <properties>
+    <property name="isCollected" value="0"/>
+   </properties>
+  </object>
+  <object id="189" x="2672" y="176" width="16" height="16">
    <properties>
     <property name="isCollected" value="0"/>
    </properties>

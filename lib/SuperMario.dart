@@ -11,7 +11,6 @@ import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flame_tiled/tiled_component.dart';
 import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
-import 'package:super_mario_game/gameElements/breakingBricks.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
 import 'package:super_mario_game/gameElements/collisionCallbacks.dart';
 import 'package:super_mario_game/gameElements/downBricks.dart';
@@ -37,6 +36,7 @@ class SuperMario extends Forge2DGame {
   ObjectGroup coinsGroup;
   ObjectGroup pipesGroup;
   ObjectGroup platformGroup;
+  ObjectGroup startAndEnd;
 
   //JUMP
 
@@ -54,16 +54,18 @@ class SuperMario extends Forge2DGame {
 
   bool immediatlyCancelTimer = false;
 
-  SuperMario() : super(gravity: Vector2(0, -10), zoom: 1.5);
+  SuperMario() : super(gravity: Vector2(0, -10), zoom: 1.6);
 
   Future<void> onLoad() async {
     super.onLoad();
+    currentStateOfMario = MarioState.idleRight;
 
+    camera.worldBounds =
+        Rect.fromLTWH(0, 0, viewport.effectiveSize.x, viewport.effectiveSize.y);
 //gravity
 
 //Contact Callbacks
     addContactCallback(CoinsContactCallback());
-    addContactCallback(MarioBreakingBricks());
     addContactCallback(MarioPlatform());
     addContactCallback(MarioDownBricks());
     addContactCallback(MarioPipes());
@@ -78,7 +80,7 @@ class SuperMario extends Forge2DGame {
 //Object Groups
 
     //Coins
-    debugMode = true;
+    debugMode = false;
 
     coinImg = await images.load('coins.png');
 
@@ -87,7 +89,7 @@ class SuperMario extends Forge2DGame {
       SpriteAnimationData.sequenced(
         amount: 8,
         textureSize: Vector2.all(20),
-        stepTime: 0.2,
+        stepTime: 0.3,
         loop: true,
       ),
     );
@@ -106,7 +108,12 @@ class SuperMario extends Forge2DGame {
           obj.height));
     });
 
-    currentStateOfMario = MarioState.idleRight;
+    //Start and end position of mario
+    startAndEnd = await tiledMap.getObjectGroupFromLayer("events");
+    double marioStartPosX = startAndEnd.objects[0].x;
+    double marioStartPosY = startAndEnd.objects[0].y;
+    double marioEndPosX = startAndEnd.objects[1].x;
+    double marioEndPosY = startAndEnd.objects[1].y;
 
     //Mario
     final marioSpriteImage = await Flame.images.load('marioSpriteSheet.png');
@@ -144,12 +151,12 @@ class SuperMario extends Forge2DGame {
         MarioState.jumpLeft: jumpLeftSpriteAnimation
       },
       current: currentStateOfMario,
-      position: Vector2(size.x / 2, -size.y / 2),
+      position: Vector2(marioStartPosX, -marioStartPosY),
       size: Vector2(27, 34.25),
     );
 
-    mario =
-        Mario(Vector2(size.x / 2, -size.y / 2), marioAnimationGroupComponent);
+    mario = Mario(
+        Vector2(marioStartPosX, -marioStartPosY), marioAnimationGroupComponent);
     add(mario);
 
     // DownBricks
@@ -198,7 +205,6 @@ class SuperMario extends Forge2DGame {
 
 //camera
     // screenToWorld(Vector2(viewport.effectiveSize.x, viewport.effectiveSize.y));
-
     print(viewport.effectiveSize.toString());
 
     accelerometerEvents.listen((AccelerometerEvent event) {
@@ -251,20 +257,20 @@ class SuperMario extends Forge2DGame {
         print("Idle Right");
         currentStateOfMario = MarioState.jumpRight;
         marioAnimationGroupComponent.current = MarioState.jumpRight;
-        if (!mario.onceExecuted) {
+        if (!mario.onceExecutedRight) {
           mario.jumpRight();
           mario.cancelX = true;
-          mario.onceExecuted = true;
+          mario.onceExecutedRight = true;
         }
       } else if (currentStateOfMario == MarioState.idleLeft) {
         print("Idle Left");
 
         currentStateOfMario = MarioState.jumpLeft;
         marioAnimationGroupComponent.current = MarioState.jumpLeft;
-        if (!mario.onceExecuted) {
+        if (!mario.onceExecutedLeft) {
           mario.jumpLeft();
           mario.cancelX = true;
-          mario.onceExecuted = true;
+          mario.onceExecutedLeft = true;
         }
       }
     }

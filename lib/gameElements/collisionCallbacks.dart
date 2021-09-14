@@ -1,7 +1,6 @@
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:super_mario_game/SuperMario.dart';
-import 'package:super_mario_game/gameElements/breakingBricks.dart';
 import 'package:super_mario_game/gameElements/coins.dart';
 import 'package:super_mario_game/gameElements/downBricks.dart';
 import 'package:super_mario_game/gameElements/mario.dart';
@@ -22,25 +21,6 @@ class CoinsContactCallback extends ContactCallback<Coins, Mario> {
   }
 }
 
-class MarioBreakingBricks extends ContactCallback<Mario, BreakingBricks> {
-  @override
-  void begin(Mario mario, BreakingBricks breakingBricks, Contact contact) {
-    print("sdfjdkfjdfs");
-    mario.timer.cancel();
-    mario.onceExecuted = false;
-    mario.cancelX = false;
-    breakingBricks.remove();
-  }
-
-  @override
-  void end(Mario mario, BreakingBricks breakingBricks, Contact contact) {
-    mario.timer.cancel();
-    mario.onceExecuted = false;
-    mario.cancelX = false;
-    breakingBricks.remove();
-  }
-}
-
 class MarioPlatform extends ContactCallback<Mario, Platform> {
   @override
   void begin(Mario mario, Platform platform, Contact contact) {
@@ -50,30 +30,52 @@ class MarioPlatform extends ContactCallback<Mario, Platform> {
     }
 
     mario.timer.cancel();
-    mario.onceExecuted = false;
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
     mario.cancelX = false;
   }
 
   @override
   void end(Mario mario, Platform platform, Contact contact) {
     mario.timer.cancel();
-    mario.onceExecuted = false;
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
     mario.cancelX = false;
   }
 }
 
 class MarioDownBricks extends ContactCallback<Mario, DownBricks> {
   @override
-  void begin(Mario mario, DownBricks downBricks, Contact contact) {}
+  void begin(Mario mario, DownBricks downBricks, Contact contact) {
+    mario.timer.cancel();
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
+    mario.cancelX = false;
+  }
 
   @override
-  void end(Mario mario, DownBricks downBricks, Contact contact) {}
+  void end(Mario mario, DownBricks downBricks, Contact contact) {
+    mario.timer.cancel();
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
+    mario.cancelX = false;
+  }
 }
 
 class MarioPipes extends ContactCallback<Mario, Pipes> {
   @override
-  void begin(Mario mario, Pipes pipes, Contact contact) {}
+  void begin(Mario mario, Pipes pipes, Contact contact) {
+    mario.timer.cancel();
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
+    mario.cancelX = false;
+  }
 
   @override
-  void end(Mario mario, Pipes pipes, Contact contact) {}
+  void end(Mario mario, Pipes pipes, Contact contact) {
+    mario.timer.cancel();
+    mario.onceExecutedLeft = false;
+    mario.onceExecutedRight = false;
+    mario.cancelX = false;
+  }
 }

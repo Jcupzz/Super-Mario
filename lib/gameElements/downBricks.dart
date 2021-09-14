@@ -7,7 +7,7 @@ class DownBricks extends BodyComponent {
   DownBricks(this.position) : super();
   @override
   Body createBody() {
-    debugMode = true;
+    debugMode = false;
     final shape = PolygonShape()..setAsBoxXY(1600, 16);
     final fixtureDef = FixtureDef(shape)
       ..userData = this // To be able to determine object in collision

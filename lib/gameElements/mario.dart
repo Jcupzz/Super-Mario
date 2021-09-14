@@ -31,7 +31,8 @@ class Mario extends PositionBodyComponent {
   double ax = 0, ay = 0;
   BodyDef bodyDef;
 
-  bool onceExecuted;
+  bool onceExecutedLeft;
+  bool onceExecutedRight;
   bool cancelX;
 
   asyncw.Timer timer;
@@ -61,8 +62,9 @@ class Mario extends PositionBodyComponent {
 
   Future<void> onLoad() async {
     super.onLoad();
-    debugMode = true;
-    onceExecuted = false;
+    debugMode = false;
+    onceExecutedLeft = false;
+    onceExecutedRight = false;
     cancelX = false;
   }
 
@@ -99,14 +101,15 @@ class Mario extends PositionBodyComponent {
     super.update(dt);
     //Running Logic
 
-    camera.followComponent(this.positionComponent);
+    camera.followComponent(this.positionComponent,
+        worldBounds: Rect.fromLTWH(0, 0, 3200, 224));
   }
 
   void jumpLeft() {
     double time = 0;
     double halfTime = 0;
-    double Vy = 2000;
-    double Vx = 200;
+    double Vy = 2500;
+    double Vx = 100;
     double V = sqrt((Vx * Vx) + (Vy * Vy));
     halfTime = (V * sin(pi / 4)) / 10;
     double angle = 45 * (pi / 180);
@@ -114,10 +117,11 @@ class Mario extends PositionBodyComponent {
       time = time + 2;
       if (time < halfTime * 2) {
         body.applyLinearImpulse(
-            Vector2(-(Vx * cos(angle)), Vy * sin(angle) - (10) * time));
+            Vector2(-(Vx * cos(angle)) * 5, Vy * sin(angle) - (15) * time));
       } else {
         sec.cancel();
-        onceExecuted = false;
+        onceExecutedLeft = false;
+
         cancelX = false;
       }
     });
@@ -125,8 +129,8 @@ class Mario extends PositionBodyComponent {
 
   void jumpRight() {
     double halfTime = 0;
-    double Vy = 2000;
-    double Vx = 200;
+    double Vy = 2500;
+    double Vx = 100;
     double V = sqrt((Vx * Vx) + (Vy * Vy));
     halfTime = (V * sin(pi / 4)) / 10;
     double time = 0;
@@ -136,10 +140,10 @@ class Mario extends PositionBodyComponent {
       time = time + 2;
       if (time < halfTime * 2) {
         body.applyLinearImpulse(
-            Vector2((Vx * cos(angle)), Vy * sin(angle) - (10) * time));
+            Vector2((Vx * cos(angle)) * 5, Vy * sin(angle) - (15) * time));
       } else {
         sec.cancel();
-        onceExecuted = false;
+        onceExecutedRight = false;
         cancelX = false;
       }
     });
